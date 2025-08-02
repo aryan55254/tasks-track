@@ -31,4 +31,38 @@ authrouter.post("/register", async (req, res) => {
   }
 });
 
+authrouter.post("/login", async (req, res) => {
+  try {
+    const { Email, Password } = req.body;
+    if (!Email || !Password) {
+      res.status(400).json({ message: "missing credentials" });
+      return;
+    }
+    const checkemail = await user.findOne({ Email });
+
+    if (!checkemail) {
+      res.status(404).json({ message: "user not found " });
+      return;
+    }
+    const checkpassword = await bcrypt.compare(Password, checkemail.Password);
+    if (!checkpassword) {
+      res.status(400).json({ message: "incorrect password" });
+      return;
+    }
+    generatejwt(res, checkemail._id);
+    res.status(200).json({ message: "login succesfull" });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error : ", err });
+    console.log("err", err);
+  }
+});
+
+authrouter.post("/logout", async (req, res) => {
+  try {
+    clearjwt(res);
+    res.status(200).json({ message: "logout succesful" });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error : ", err });
+  }
+});
 module.exports = authrouter;

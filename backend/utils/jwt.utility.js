@@ -4,7 +4,7 @@ require("dotenv").config();
 const jwt_secret = process.env.JWT_SECRET;
 
 const generatejwt = (res, userid) => {
-  const token = jwt.sign(jwt_secret, { userid }, { expiresIn: "1h" });
+  const token = jwt.sign({ userid }, jwt_secret, { expiresIn: "1h" });
   res.cookie("jwt", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -18,7 +18,7 @@ const clearjwt = (res) => {
     httpOnly: true,
     samesite: "strict",
     secure: process.env.NODE_ENV === "production",
-    expiresIn: new Date(0),
+    expires: new Date(0),
     path: "/",
   });
 };
