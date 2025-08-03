@@ -2,9 +2,11 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const jwt_secret = process.env.JWT_SECRET;
-
+//generate jwt token 
 const generatejwt = (res, userid) => {
+  //sign token with the secret key and put in userid in payloads
   const token = jwt.sign({ userid }, jwt_secret, { expiresIn: "1h" });
+//send the token via cookie
   res.cookie("jwt", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -13,6 +15,7 @@ const generatejwt = (res, userid) => {
     path: "/",
   });
 };
+//clear the token from cookie
 const clearjwt = (res) => {
   res.cookie("jwt", "", {
     httpOnly: true,

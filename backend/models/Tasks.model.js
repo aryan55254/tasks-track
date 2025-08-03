@@ -9,6 +9,7 @@ const Taskschema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  //connected to user model to give the user only thier own tasks
   User: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -21,3 +22,4 @@ const Taskschema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Tasks", Taskschema);
+//tasks model

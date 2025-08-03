@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const user = require("../models/User.model");
 const { generatejwt, clearjwt } = require("../utils/jwt.utility");
 const authrouter = require("express").Router();
-
+//register route
 authrouter.post("/register", async (req, res) => {
   try {
     const { Username, Email, Password } = req.body;
@@ -30,7 +30,7 @@ authrouter.post("/register", async (req, res) => {
     res.status(500).json({ message: "internal server error : ", err });
   }
 });
-
+//login route
 authrouter.post("/login", async (req, res) => {
   try {
     const { Email, Password } = req.body;
@@ -55,7 +55,7 @@ authrouter.post("/login", async (req, res) => {
     res.status(500).json({ message: "internal server error : ", err });
   }
 });
-
+//login route
 authrouter.post("/logout", async (req, res) => {
   try {
     clearjwt(res);

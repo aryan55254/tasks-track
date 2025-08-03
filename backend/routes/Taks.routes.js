@@ -1,7 +1,7 @@
 const Tasks = require("../models/Tasks.model");
 const taskrouter = require("express").Router();
 const authmiddleware = require("../middlewares/auth.middleware");
-//work
+//add task
 taskrouter.post("/add", authmiddleware, async (req, res) => {
   try {
     const { Task } = req.body;
@@ -19,7 +19,7 @@ taskrouter.post("/add", authmiddleware, async (req, res) => {
     res.status(500).json({ message: "internal server error : ", err });
   }
 });
-
+//delete particular task
 taskrouter.delete("/:id", authmiddleware, async (req, res) => {
   try {
     const task = await Tasks.findOneAndDelete({
@@ -36,7 +36,7 @@ taskrouter.delete("/:id", authmiddleware, async (req, res) => {
     res.status(500).json({ message: "internal server error : ", err });
   }
 });
-
+//edit particular task
 taskrouter.post("/edit/:id", authmiddleware, async (req, res) => {
   try {
     const { Task } = req.body;
@@ -49,7 +49,7 @@ taskrouter.post("/edit/:id", authmiddleware, async (req, res) => {
         _id: req.params.id,
         User: req.user._id,
       },
-      { Task: task },
+      { Task: Task },
       { new: true }
     );
     if (!task) {
@@ -60,9 +60,10 @@ taskrouter.post("/edit/:id", authmiddleware, async (req, res) => {
     res.status(200).json({ message: " task updated " });
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
+    console.log(err);
   }
 });
-
+//change particular tasks status
 taskrouter.post("/changestatus/:id", authmiddleware, async (req, res) => {
   try {
     const task = await Tasks.findOne({
@@ -74,14 +75,14 @@ taskrouter.post("/changestatus/:id", authmiddleware, async (req, res) => {
         .status(404)
         .json({ message: "Task not found or you do not have permission" });
     }
-    task.completed = !task.completed;
+    task.Completed = !task.Completed;
     await task.save();
     res.status(200).json({ message: "status changed" });
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
   }
 });
-
+//delete tasks of same status
 taskrouter.delete(
   "/deletebystatus/:status",
   authmiddleware,
@@ -105,7 +106,7 @@ taskrouter.delete(
     }
   }
 );
-//work
+//get all tasks
 taskrouter.get("/", authmiddleware, async (req, res) => {
   try {
     const tasks = await Tasks.find({
@@ -119,7 +120,7 @@ taskrouter.get("/", authmiddleware, async (req, res) => {
     res.status(500).json({ message: "internal server error : ", err });
   }
 });
-
+//get tasks of same status
 taskrouter.get("/:status", authmiddleware, async (req, res) => {
   try {
     const completionstatus = req.params.status === "true";
