@@ -53,7 +53,6 @@ authrouter.post("/login", async (req, res) => {
     res.status(200).json({ message: "login succesfull" });
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
-    console.log("err", err);
   }
 });
 
