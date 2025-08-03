@@ -1,7 +1,7 @@
 const Tasks = require("../models/Tasks.model");
 const taskrouter = require("express").Router();
 const authmiddleware = require("../middlewares/auth.middleware");
-
+//work
 taskrouter.post("/add", authmiddleware, async (req, res) => {
   try {
     const { Task } = req.body;
@@ -76,7 +76,7 @@ taskrouter.post("/changestatus/:id", authmiddleware, async (req, res) => {
     }
     task.completed = !task.completed;
     await task.save();
-    res.status(200).json({ message: "status changes" });
+    res.status(200).json({ message: "status changed" });
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
   }
@@ -87,21 +87,53 @@ taskrouter.delete(
   authmiddleware,
   async (req, res) => {
     try {
-      const tasks = await Tasks.findOne({
-        Completed: req.params.status,
+      const completionstatus = req.params.status === "true";
+      const result = await Tasks.deleteMany({
+        Completed: completionstatus,
         User: req.user._id,
       });
-      if (!tasks) {
-        return res.status(404).json({ message: "tasks not found" });
+      if (result.deletedCount === 0) {
+        return res
+          .status(404)
+          .json({ message: "No tasks found with that status to delete" });
       }
-      await Tasks.deleteMany(tasks);
-      res.status(200).json({ message: "tasks deleted" });
+      res.status(200).json({
+        message: `${result.deletedCount} tasks were deleted successfully`,
+      });
     } catch (err) {
       res.status(500).json({ message: "internal server error", err });
     }
   }
 );
+//work
+taskrouter.get("/", authmiddleware, async (req, res) => {
+  try {
+    const tasks = await Tasks.find({
+      User: req.user._id,
+    });
+    if (!tasks || tasks.length === 0) {
+      return res.status(404).json({ message: "tasks not found" });
+    }
+    res.status(200).json({ tasks });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error : ", err });
+  }
+});
 
-
+taskrouter.get("/:status", authmiddleware, async (req, res) => {
+  try {
+    const completionstatus = req.params.status === "true";
+    const result = await Tasks.find({
+      User: req.user._id,
+      Completed: completionstatus,
+    });
+    if (!result || result.length == 0) {
+      return res.status(404).json({ message: "tasks not found" });
+    }
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error : ", err });
+  }
+});
 
 module.exports = taskrouter;
