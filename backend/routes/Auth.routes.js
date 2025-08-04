@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const user = require("../models/User.model");
-const { generatejwt, clearjwt, refreshjwt } = require("../utils/jwt.utility");
+const { generatejwt, clearjwt } = require("../utils/jwt.utility");
 const authrouter = require("express").Router();
 //register route
 authrouter.post("/register", async (req, res) => {
@@ -50,7 +50,6 @@ authrouter.post("/login", async (req, res) => {
       return;
     }
     generatejwt(res, checkemail._id);
-    refreshjwt(res, checkemail._id);
     res.status(200).json({ message: "login succesfull" });
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
