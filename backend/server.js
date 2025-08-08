@@ -19,7 +19,7 @@ app.use(cookieparser());
 connectdb();
 
 //port
-const PORT = 5000;
+const PORT = 6000;
 
 //port
 app.use("/api/auth", authroutes);

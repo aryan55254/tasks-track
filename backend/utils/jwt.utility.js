@@ -4,13 +4,13 @@ const jwt_secret = process.env.JWT_SECRET;
 //generate jwt token
 const generatejwt = (res, userid) => {
   //sign token with the secret key and put in userid in payloads
-  const token = jwt.sign({ userid }, jwt_secret, { expiresIn: "50m" });
+  const token = jwt.sign({ userid }, jwt_secret, { expiresIn: "6h" });
   //send the token via cookie
   res.cookie("jwt", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     samesite: "strict",
-    maxAge: 50 * 60 * 1000,
+    maxAge: 6 * 60 * 60 * 1000,
     path: "/",
   });
 };
@@ -32,4 +32,4 @@ const clearjwt = (res) => {
   });
 };
 
-module.exports = { generatejwt, clearjwt};
+module.exports = { generatejwt, clearjwt };
