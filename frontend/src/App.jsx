@@ -1,8 +1,11 @@
 import Landing from "./Pages/Landing"
-
+import GearBackgroundLayout from "./Components/GearBackground/GearBackgroundLayout"
 function App() {
   return (
-    <Landing />
+    <GearBackgroundLayout>
+      <Landing />
+    </GearBackgroundLayout>
+
   )
 }
 

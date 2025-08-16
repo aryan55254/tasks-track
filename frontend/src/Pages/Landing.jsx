@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { X, Menu, List, WatchIcon, BoltIcon } from "lucide-react";
-
 const faqs = [
   {
     id: "q1",
@@ -85,7 +84,7 @@ function Landing() {
   };
 
   return (
-    <div className="bg-gray-800 text-gray-200 min-h-screen">
+    <div className="text-gray-200 ">
       {/* Navbar Section */}
       <nav className="py-4 px-6 md:px-10 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm border-b border-gray-800">
         <div className="container mx-auto flex items-center justify-between">
@@ -177,7 +176,7 @@ function Landing() {
       </div>
 
       {/* Features Section */}
-      <div id="features" className="py-24 bg-gray-900 px-6">
+      <div id="features" className="py-24 bg-black/20 backdrop-blur-mdpx-6">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white">
@@ -207,7 +206,7 @@ function Landing() {
         </div>
       </div>
       {/* faqs */}
-      <div id="faq" className="py-24 bg-gray-800 px-6">
+      <div id="faq" className="py-24  px-6">
         <div className="container mx-auto max-w-3xl">
           <div className="text-center mb-16">
             <h2 className="text-6xl font-bold text-white">
@@ -248,6 +247,7 @@ function Landing() {
         </div>
       </footer>
     </div>
+
   );
 }
 
