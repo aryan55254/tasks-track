@@ -57,7 +57,7 @@ authrouter.post("/login", validate(loginschema), async (req, res) => {
     res.status(500).json({ message: "internal server error : ", err });
   }
 });
-//login route
+//logout route
 authrouter.post("/logout", async (req, res) => {
   try {
     clearjwt(res);

@@ -231,23 +231,13 @@ function Landing() {
       </div>
       {/* footer section */}
       <footer id="contact" className="bg-gray-900 border-t border-gray-800">
-        <div className="container mx-auto py-6 px-6 flex flex-col sm:flex-row items-center justify-between">
-          <p className="text-gray-400 text-sm mb-4 sm:mb-0">
+        <div className="container mx-auto py-6 px-6 flex justify-center items-center">
+          <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} TaskTrack. All rights reserved.
           </p>
-          <a
-            href="https://github.com/aryan55254/tasks-track"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="TaskTrack GitHub Repository"
-            className="text-gray-400 hover:text-white transition-colors duration-200"
-          >
-            <GithubIcon />
-          </a>
         </div>
       </footer>
     </div>
-
   );
 }
 
