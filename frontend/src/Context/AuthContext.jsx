@@ -59,9 +59,6 @@ export const AuthProvider = ({ children }) => {
       setuser(null);
     }
   };
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  const value = { user, login, logout };
+  const value = { user, login, logout , loading};
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
