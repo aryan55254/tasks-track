@@ -1,6 +1,7 @@
 import { Mail, Lock } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ function Login() {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [isSubmitting, setsubmitting] = useState(false);
-
+  const { login } = useContext(AuthContext);
   const handlemailchange = (e) => {
     setEmail(e.target.value);
     if (error) seterror("");
@@ -21,19 +22,12 @@ function Login() {
     e.preventDefault();
     setsubmitting(true);
     seterror("");
+    if (!Email || !Password) {
+      seterror("Email and Password are required.");
+      return;
+    }
     try {
-      const response = await fetch("", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          Email: Email,
-          Password: Password,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to Login. Please try again.");
-      }
+      await login(Email, Password);
       navigate("/alltasks");
     } catch (err) {
       seterror(err.message);

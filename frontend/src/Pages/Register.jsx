@@ -27,7 +27,9 @@ function Register() {
     setsubmitting(true);
     seterror("");
     try {
-      const response = await fetch("", {
+      const apiurl = import.meta.env.VITE_BACKEND_API;
+      const registerendpoint = `${apiurl}/api/auth/register`;
+      const response = await fetch(registerendpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

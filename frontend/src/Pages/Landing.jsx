@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X, Menu, List, WatchIcon, BoltIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 const faqs = [
   {
     id: "q1",
@@ -113,7 +114,7 @@ function Landing() {
               Contact
             </a>
             <button className="rounded-md bg-gray-600 text-white px-5 py-2 font-semibold hover:bg-gray-700 transition-colors duration-200 cursor-pointer ">
-              Get Started
+              <Link to="/login">Get Started</Link>
             </button>
           </div>
 
@@ -151,7 +152,7 @@ function Landing() {
                 Contact
               </a>
               <button className="w-full text-center rounded-md bg-gray-600 text-white py-2 font-semibold hover:bg-gray-700 transition-colors duration-200 cursor-pointer">
-                Get Started
+                <Link to="/login">Get Started</Link>
               </button>
             </div>
           </div>
@@ -170,7 +171,7 @@ function Landing() {
             goals.
           </p>
           <button className="text-xl md:text-2xl px-8 py-4 font-semibold mt-12 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-transform duration-200 hover:scale-105 cursor-pointer">
-            Get Started
+            <Link to="/login">Get Started</Link>
           </button>
         </div>
       </div>

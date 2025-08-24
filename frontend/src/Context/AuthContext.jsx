@@ -3,10 +3,14 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setuser] = useState(null);
   const [loading, setloading] = useState(true);
+  const apiurl = import.meta.env.VITE_BACKEND_API;
   useEffect(() => {
     const checkuserstatus = async () => {
       try {
-        const response = await fetch("", { credentials: "include" });
+        const getuserendpoint = `${apiurl}/api/user/getuser`;
+        const response = await fetch(getuserendpoint, {
+          credentials: "include",
+        });
         if (response.ok) {
           const userdata = await response.json();
           setuser(userdata);
@@ -17,11 +21,13 @@ export const AuthProvider = ({ children }) => {
         setloading(false);
       }
     };
+    checkuserstatus();
   }, []);
 
   const login = async (Email, Password) => {
     try {
-      const loginresponse = await fetch("", {
+      const loginendpoint = `${apiurl}/api/auth/login`;
+      const loginresponse = await fetch(loginendpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ Email, Password }),
@@ -49,7 +55,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch("", {
+      const logoutendpoint = `${apiurl}/api/auth/logout`;
+      await fetch(logoutendpoint, {
         method: "POST",
         credentials: "include",
       });
@@ -59,6 +66,6 @@ export const AuthProvider = ({ children }) => {
       setuser(null);
     }
   };
-  const value = { user, login, logout , loading};
+  const value = { user, login, logout, loading };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
