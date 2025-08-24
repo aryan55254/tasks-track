@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (Email, Password) => {
     try {
       const loginendpoint = `${apiurl}/api/auth/login`;
+      const userendpoint = `${apiurl}/api/user/getuser`;
       const loginresponse = await fetch(loginendpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -39,7 +40,9 @@ export const AuthProvider = ({ children }) => {
         console.error("Login Api failed", errordata.message);
         throw new Error(errordata.message || "Login failed");
       }
-      const userResponse = await fetch("", { credentials: "include" });
+      const userResponse = await fetch(userendpoint, {
+        credentials: "include",
+      });
       const userData = await userResponse.json();
 
       if (!userResponse.ok) {

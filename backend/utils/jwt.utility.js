@@ -9,7 +9,7 @@ const generatejwt = (res, userid) => {
   res.cookie("jwt", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    samesite: "strict",
+    sameSite: "none",
     maxAge: 6 * 60 * 60 * 1000,
     path: "/",
   });
@@ -18,7 +18,7 @@ const generatejwt = (res, userid) => {
 const clearjwt = (res) => {
   res.cookie("jwt", "", {
     httpOnly: true,
-    samesite: "strict",
+    sameSite: "none",
     secure: process.env.NODE_ENV === "production",
     expires: new Date(0),
     path: "/",
