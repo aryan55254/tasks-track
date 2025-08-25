@@ -26,7 +26,22 @@ function Landing() {
   const handleItemClick = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+  //handlenavclick is a special function to remove the unusual behaviour occuring due to the navbar in page scrolling thing was occuring beacuse the react router dom wraps out our whole app to manage navigation here his hijacking was interfering with the browser default scrolling behavior. The router was taking control from browser and then performed its own basic scroll, completely ignoring our tailwind scroll command
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
 
+    const targetElement = document.querySelector(targetId);
+    if (!targetElement) return;
+    const navbarElement = document.querySelector("nav");
+    const navbarHeight = navbarElement ? navbarElement.offsetHeight : 0;
+    const targetPosition =
+      targetElement.getBoundingClientRect().top + window.scrollY;
+    const offsetPosition = targetPosition - navbarHeight;
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
   const GithubIcon = (props) => (
     <svg
       viewBox="0 0 16 16"
@@ -87,7 +102,7 @@ function Landing() {
   return (
     <div className="text-gray-200 ">
       {/* Navbar Section */}
-      <nav className="py-4 px-6 md:px-10 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm border-b border-gray-800">
+      <nav className="py-4 px-6 md:px-10 top-0 z-50 bg-gray-900 backdrop-blur-sm border-b border-gray-800">
         <div className="container mx-auto flex items-center justify-between">
           <div className="text-3xl md:text-4xl font-bold text-gray-200">
             TaskTrack
@@ -97,19 +112,22 @@ function Landing() {
           <div className="hidden md:flex items-center space-x-8 text-lg text-gray-300">
             <a
               href="#features"
-              className="hover:text-gray-600 transition-colors duration-200"
+              onClick={(e) => handleNavClick(e, "#features")}
+              className="hover:text-gray-600 transition-colors duration-200 "
             >
               Features
             </a>
             <a
               href="#faq"
+              onClick={(e) => handleNavClick(e, "#faq")}
               className="hover:text-gray-600 transition-colors duration-200"
             >
               FAQs
             </a>
             <a
               href="#contact"
-              className="hover:text-gray-600 transition-colors duration-200"
+              onClick={(e) => handleNavClick(e, "#contact")}
+              className="hover:text-gray-600 transition-colors duration-200 "
             >
               Contact
             </a>
@@ -135,19 +153,22 @@ function Landing() {
             <div className="flex flex-col items-center space-y-4">
               <a
                 href="#features"
+                onClick={(e) => handleNavClick(e, "#features")}
                 className="w-full text-center py-2  bg-gray-600  hover:bg-gray-700 cursor-pointer"
               >
                 Features
               </a>
               <a
                 href="#faq"
-                className="w-full text-center py-2 bg-gray-600  hover:bg-gray-700 cursor-pointer"
+                onClick={(e) => handleNavClick(e, "#faq")}
+                className="w-full text-center py-2 bg-gray-600  hover:bg-gray-700 cursor-pointer "
               >
                 FAQs
               </a>
               <a
                 href="#contact"
-                className="w-full text-center py-2  bg-gray-600  hover:bg-gray-700 cursor-pointer"
+                onClick={(e) => handleNavClick(e, "#contact")}
+                className="w-full text-center py-2  bg-gray-600  hover:bg-gray-700 cursor-pointer "
               >
                 Contact
               </a>
@@ -177,7 +198,10 @@ function Landing() {
       </div>
 
       {/* Features Section */}
-      <div id="features" className="py-24 bg-black/20 backdrop-blur-mdpx-6">
+      <div
+        id="features"
+        className="py-24 bg-black/20 backdrop-blur-md px-6 scroll-mt-24"
+      >
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white">
@@ -207,7 +231,7 @@ function Landing() {
         </div>
       </div>
       {/* faqs */}
-      <div id="faq" className="py-24  px-6">
+      <div id="faq" className="py-24  px-6 scroll-mt-24">
         <div className="container mx-auto max-w-3xl">
           <div className="text-center mb-16">
             <h2 className="text-6xl font-bold text-white">
@@ -231,7 +255,10 @@ function Landing() {
         </div>
       </div>
       {/* footer section */}
-      <footer id="contact" className="bg-gray-900 border-t border-gray-800">
+      <footer
+        id="contact"
+        className="bg-gray-900 border-t border-gray-800 scroll-mt-24"
+      >
         <div className="container mx-auto py-6 px-6 flex justify-center items-center">
           <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} TaskTrack. All rights reserved.

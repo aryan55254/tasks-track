@@ -113,7 +113,7 @@ function Register() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="w-full mt-8 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-semibold text-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            className="w-full mt-8 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-semibold text-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer"
           >
             {isSubmitting ? (
               <>
@@ -149,7 +149,7 @@ function Register() {
               Already have an account?
               <Link
                 to="/login"
-                className="font-semibold text-indigo-400 hover:underline ml-1"
+                className="font-semibold text-indigo-400 hover:underline ml-1 cursor-pointer"
               >
                 Log In
               </Link>
