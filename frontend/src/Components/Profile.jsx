@@ -25,7 +25,7 @@ function Profile() {
 
         <button
           onClick={handlelogout}
-          className="w-full flex items-center justify-start mt-4 px-3 py-2 text-left text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white"
+          className="w-full cursor-pointer flex items-center justify-start mt-4 px-3 py-2 text-left text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white"
         >
           <LogOut className="h-5 w-5 mr-3" />
           <span>Logout</span>
