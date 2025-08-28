@@ -6,10 +6,6 @@ const {
   registerschema,
   loginSchema,
 } = require("../validation_schema/auth.validation");
-const {
-  registerschema,
-  loginschema,
-} = require("../validation_schema/auth.validation");
 //register route
 authrouter.post("/register", validate(registerschema), async (req, res) => {
   try {
