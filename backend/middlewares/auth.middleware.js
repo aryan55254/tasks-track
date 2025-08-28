@@ -16,7 +16,7 @@ const authenticateuser = async (req, res, next) => {
     //verify the token
     const decoded = jwt.verify(token, jwt_secret);
     //find user from db by the userid in payloads of token
-    const user = await UserModel.findById(decoded.userid, "_id Email Username");
+    const user = await UserModel.findById(decoded.userId, "_id Email Username");
     if (!user) {
       return res
         .status(401)
