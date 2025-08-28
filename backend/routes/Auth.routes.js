@@ -2,7 +2,10 @@ const bcrypt = require("bcryptjs");
 const user = require("../models/User.model");
 const { generatejwt, clearjwt } = require("../utils/jwt.utility");
 const authrouter = require("express").Router();
-const validate = require("../middlewares/validate.middleware");
+const {
+  registerschema,
+  loginSchema,
+} = require("../validation_schema/auth.validation");
 const {
   registerschema,
   loginschema,
@@ -36,9 +39,9 @@ authrouter.post("/register", validate(registerschema), async (req, res) => {
   }
 });
 //login route
-authrouter.post("/login", validate(loginschema), async (req, res) => {
-  console.log("LOGIN ATTEMPT RECEIVED WITH BODY:", req.body); 
-  
+authrouter.post("/login", validate(loginSchema), async (req, res) => {
+  console.log("LOGIN ATTEMPT RECEIVED WITH BODY:", req.body);
+
   try {
     const { Email, Password } = req.body;
     if (!Email || !Password) {
