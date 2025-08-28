@@ -16,40 +16,28 @@ export const AuthProvider = ({ children }) => {
           setuser(userdata);
         }
       } catch (err) {
-        console.error("couldn't fetch user status");
+        console.error("couldn't fetch user status", err);
       } finally {
         setloading(false);
       }
     };
     checkuserstatus();
-  }, []);
+  }, [apiurl]);
 
   const login = async (Email, Password) => {
     try {
       const loginendpoint = `${apiurl}/api/auth/login`;
-      const userendpoint = `${apiurl}/api/user/getuser`;
       const loginresponse = await fetch(loginendpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ Email, Password }),
         credentials: "include",
       });
-
+      const data = await loginresponse.json();
       if (!loginresponse.ok) {
-        const errordata = await loginresponse.json();
-        console.error("Login Api failed", errordata.message);
-        throw new Error(errordata.message || "Login failed");
+        throw new Error(data.message || "Login failed. Please try again.");
       }
-      const userResponse = await fetch(userendpoint, {
-        credentials: "include",
-      });
-      const userData = await userResponse.json();
-
-      if (!userResponse.ok) {
-        throw new Error("Failed to fetch user data after login.");
-      }
-
-      setuser(userData);
+      setuser(data);
     } catch (error) {
       console.error("An error occurred in the login process:", error);
       throw error;

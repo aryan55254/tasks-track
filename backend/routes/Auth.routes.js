@@ -3,7 +3,10 @@ const user = require("../models/User.model");
 const { generatejwt, clearjwt } = require("../utils/jwt.utility");
 const authrouter = require("express").Router();
 const validate = require("../middlewares/validate.middleware");
-const { registerschema, loginschema } = require("../validation_schema/auth.validation");
+const {
+  registerschema,
+  loginschema,
+} = require("../validation_schema/auth.validation");
 //register route
 authrouter.post("/register", validate(registerschema), async (req, res) => {
   try {
@@ -52,7 +55,8 @@ authrouter.post("/login", validate(loginschema), async (req, res) => {
       return;
     }
     generatejwt(res, checkemail._id);
-    res.status(200).json({ message: "login succesfull" });
+    const { Password: _, ...userData } = checkemail.toObject();
+    res.status(200).json(userData);
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
   }
