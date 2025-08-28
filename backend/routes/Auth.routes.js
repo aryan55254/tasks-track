@@ -37,6 +37,8 @@ authrouter.post("/register", validate(registerschema), async (req, res) => {
 });
 //login route
 authrouter.post("/login", validate(loginschema), async (req, res) => {
+  console.log("LOGIN ATTEMPT RECEIVED WITH BODY:", req.body); 
+  
   try {
     const { Email, Password } = req.body;
     if (!Email || !Password) {
