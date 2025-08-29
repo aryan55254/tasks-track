@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function InputArea({ onTaskAdded }) {
-  const [task, setTask] = useState("");
+  const [Task, setTask] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const CHARACTER_LIMIT = 50;
@@ -16,7 +16,7 @@ function InputArea({ onTaskAdded }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!task.trim()) {
+    if (!Task.trim()) {
       setError("Task cannot be empty.");
       return;
     }
@@ -29,8 +29,9 @@ function InputArea({ onTaskAdded }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          Task: task,
+          Task: Task,
         }),
+        credentials: "include",
       });
       const data = await response.json();
       if (!response.ok) {
@@ -58,7 +59,7 @@ function InputArea({ onTaskAdded }) {
           type="text"
           className="flex-grow bg-slate-800 text-slate-200 border border-slate-700 rounded-md px-4 py-3 text-base placeholder:text-slate-500 focus:outline-none focus:border-gray-200 focus:ring-2 focus:ring-gray-500/50 transition-all duration-200"
           placeholder="Add New Task ...... "
-          value={task}
+          value={Task}
           onChange={handleTaskChange}
           disabled={isLoading}
           maxLength={CHARACTER_LIMIT}
@@ -75,7 +76,7 @@ function InputArea({ onTaskAdded }) {
       <div className="flex justify-between items-center px-1 min-h-[1.25rem] text-sm">
         {error ? <p className="text-red-500 m-0">{error}</p> : <span></span>}
         <p className="text-slate-400 m-0">
-          {task.length}/{CHARACTER_LIMIT}
+          {Task.length}/{CHARACTER_LIMIT}
         </p>
       </div>
     </form>
