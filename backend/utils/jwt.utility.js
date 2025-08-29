@@ -4,12 +4,14 @@ const jwt_secret = process.env.JWT_SECRET;
 //generate jwt token
 const generatejwt = (res, userid) => {
   //sign token with the secret key and put in userid in payloads
+  const isProduction = process.env.NODE_ENV === "production";
   const token = jwt.sign({ userid }, jwt_secret, { expiresIn: "6h" });
+
   //send the token via cookie
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "none",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
     maxAge: 6 * 60 * 60 * 1000,
     path: "/",
   });
@@ -18,15 +20,15 @@ const generatejwt = (res, userid) => {
 const clearjwt = (res) => {
   res.cookie("jwt", "", {
     httpOnly: true,
-    sameSite: "none",
-    secure: process.env.NODE_ENV === "production",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
     expires: new Date(0),
     path: "/",
   });
   res.cookie("refreshjwt", "", {
     httpOnly: true,
-    samesite: "strict",
-    secure: process.env.NODE_ENV === "production",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
     expires: new Date(0),
     path: "/",
   });

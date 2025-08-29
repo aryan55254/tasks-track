@@ -4,7 +4,6 @@ require("dotenv").config();
 
 const authenticateuser = async (req, res, next) => {
   try {
-    //get token from cookie
     const token = req.cookies.jwt;
 
     if (!token) {
@@ -22,7 +21,6 @@ const authenticateuser = async (req, res, next) => {
         .status(401)
         .json({ message: "Not authorized, user not found" });
     }
-    // Attach the authenticated user object to the request object this allows subsequent request to use this
     req.user = user;
     next();
   } catch (err) {
