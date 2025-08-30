@@ -4,8 +4,8 @@
 
 ##  Key Features
 
-* ** Secure Authentication:** User registration and login powered by JSON Web Tokens (JWT).
-* ** Full CRUD Operations:** Create, read, update, and delete tasks with ease.
+* **Secure Authentication:** User registration and login powered by JSON Web Tokens (JWT).
+* **Full CRUD Operations:** Create, read, update, and delete tasks with ease.
 * **Input Validation:** Robust form validation using Zod.
 
 ## 🛠️ Tech Stack
@@ -57,7 +57,7 @@ Follow these instructions to get a local copy up and running for development and
         ```
     * Start the backend server (it will typically run on port 3000):
         ```sh
-        npm run dev
+        node server.js
         ```
 
 3.  **Set up the Frontend:**
