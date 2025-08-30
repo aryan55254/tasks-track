@@ -8,11 +8,13 @@ import ProtectedRoute from "./Routing/ProtectedRoute";
 import ActiveTasks from "./Pages/ActiveTask";
 import AllTasks from "./Pages/AllTask";
 import CompletedTasks from "./Pages/CompletedTask";
+import { TaskProvider } from "./Context/TaskContext";
+
 function App() {
   return (
     <AuthProvider>
       <Routes>
-        {/*  public routes */}
+        {/* public routes */}
         <Route
           path="/"
           element={
@@ -37,12 +39,15 @@ function App() {
             </GearBackgroundLayout>
           }
         />
+
         {/* protected routes */}
         <Route
           path="/activetasks"
           element={
             <ProtectedRoute>
-              <ActiveTasks />
+              <TaskProvider>
+                <ActiveTasks />
+              </TaskProvider>
             </ProtectedRoute>
           }
         />
@@ -50,7 +55,9 @@ function App() {
           path="/alltasks"
           element={
             <ProtectedRoute>
-              <AllTasks />
+              <TaskProvider>
+                <AllTasks />
+              </TaskProvider>
             </ProtectedRoute>
           }
         />
@@ -58,7 +65,9 @@ function App() {
           path="/completedtasks"
           element={
             <ProtectedRoute>
-              <CompletedTasks />
+              <TaskProvider>
+                <CompletedTasks />
+              </TaskProvider>
             </ProtectedRoute>
           }
         />

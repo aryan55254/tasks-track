@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useTasks } from "../Context/TaskContext";
 
-function InputArea({ onTaskAdded }) {
+function InputArea() {
+  const { handleTaskAdded } = useTasks();
   const [Task, setTask] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +15,6 @@ function InputArea({ onTaskAdded }) {
       if (error) setError("");
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!Task.trim()) {
@@ -22,33 +23,16 @@ function InputArea({ onTaskAdded }) {
     }
     setIsLoading(true);
     setError("");
-    try {
-      const apiUrl = import.meta.env.VITE_BACKEND_API;
-      const addTaskEndpoint = `${apiUrl}/api/task/add`;
-      const response = await fetch(addTaskEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          Task: Task,
-        }),
-        credentials: "include",
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to add task");
-      }
+    const success = await handleTaskAdded(Task);
+
+    setIsLoading(false);
+
+    if (success) {
       setTask("");
-      if (onTaskAdded) {
-        onTaskAdded(data);
-      }
-    } catch (err) {
-      console.error("Submission error : ", err);
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
+    } else {
+      setError("Failed to add task. Please try again.");
     }
   };
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -58,7 +42,7 @@ function InputArea({ onTaskAdded }) {
         <input
           type="text"
           className="flex-grow bg-slate-800 text-slate-200 border border-slate-700 rounded-md px-4 py-3 text-base placeholder:text-slate-500 focus:outline-none focus:border-gray-200 focus:ring-2 focus:ring-gray-500/50 transition-all duration-200"
-          placeholder="Add New Task ...... "
+          placeholder="Add New Task ......"
           value={Task}
           onChange={handleTaskChange}
           disabled={isLoading}
