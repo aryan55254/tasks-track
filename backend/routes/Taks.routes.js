@@ -13,8 +13,8 @@ taskrouter.post("/add", authmiddleware, async (req, res) => {
       User: req.user._id,
       Task: Task,
     });
-    await newtask.save();
-    res.status(200).json({ message: "task added" });
+    const savedtask = await newtask.save();
+    res.status(200).json(savedtask);
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
   }
@@ -57,7 +57,7 @@ taskrouter.post("/edit/:id", authmiddleware, async (req, res) => {
         message: "Task not found or you do not have permission to delete it",
       });
     }
-    res.status(200).json({ message: " task updated " });
+    res.status(200).json(task);
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
     console.log(err);
@@ -77,7 +77,7 @@ taskrouter.post("/changestatus/:id", authmiddleware, async (req, res) => {
     }
     task.Completed = !task.Completed;
     await task.save();
-    res.status(200).json({ message: "status changed" });
+    res.status(200).json(task);
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
   }
@@ -131,7 +131,7 @@ taskrouter.get("/:status", authmiddleware, async (req, res) => {
     if (!result || result.length == 0) {
       return res.status(404).json({ message: "tasks not found" });
     }
-    res.status(200).json({ result });
+    res.status(200).json({ tasks: result });
   } catch (err) {
     res.status(500).json({ message: "internal server error : ", err });
   }
