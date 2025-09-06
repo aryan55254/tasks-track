@@ -1,12 +1,12 @@
 const user = require("../models/User.model");
 const authmiddleware = require("../middlewares/auth.middleware");
 const userrouter = require("express").Router();
-//get user
-userrouter.get("/getuser", authmiddleware, async (req, res, next) => {
+//get user 
+userrouter.get("/getuser", authmiddleware, async (req, res) => {
   try {
     res.status(200).json(req.user);
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: "internal server error :" }, err);
   }
 });
 module.exports = userrouter;

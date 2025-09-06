@@ -6,7 +6,7 @@ const connectdb = require("./connectdb/connectdb");
 const authroutes = require("./routes/Auth.routes");
 const userroutes = require("./routes/User.routes");
 const taskroutes = require("./routes/Taks.routes");
-const errorhandler = require("./middlewares/errorhandling");
+
 //app initiazed
 const app = express();
 
@@ -30,8 +30,6 @@ const PORT = 6000;
 app.use("/api/auth", authroutes);
 app.use("/api/user", userroutes);
 app.use("/api/task", taskroutes);
-
-app.use(errorhandler);
 
 //server
 app.listen(PORT, () => {

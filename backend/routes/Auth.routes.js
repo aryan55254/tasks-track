@@ -8,39 +8,35 @@ const {
 } = require("../validation_schema/auth.validation");
 const validate = require("../middlewares/validate.middleware");
 //register route
-authrouter.post(
-  "/register",
-  validate(registerschema),
-  async (req, res, next) => {
-    try {
-      const { Username, Email, Password } = req.body;
-      if (!Username || !Email || !Password) {
-        res.status(400).json({ message: "missing credentials" });
-        return;
-      }
-      const existingemail = await user.findOne({ Email });
-      if (existingemail) {
-        res
-          .status(409)
-          .json({ message: "account with this email already exists" });
-        return;
-      }
-      const hashedpassword = await bcrypt.hash(Password, 10);
-
-      const newuser = new user({
-        Username,
-        Email,
-        Password: hashedpassword,
-      });
-      await newuser.save();
-      res.status(201).json({ message: "user succesfuly registered" });
-    } catch (err) {
-      next(err);
+authrouter.post("/register", validate(registerschema), async (req, res) => {
+  try {
+    const { Username, Email, Password } = req.body;
+    if (!Username || !Email || !Password) {
+      res.status(400).json({ message: "missing credentials" });
+      return;
     }
+    const existingemail = await user.findOne({ Email });
+    if (existingemail) {
+      res
+        .status(409)
+        .json({ message: "account with this email already exists" });
+      return;
+    }
+    const hashedpassword = await bcrypt.hash(Password, 10);
+
+    const newuser = new user({
+      Username,
+      Email,
+      Password: hashedpassword,
+    });
+    await newuser.save();
+    res.status(201).json({ message: "user succesfuly registered" });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error : ", err });
   }
-);
+});
 //login route
-authrouter.post("/login", validate(loginSchema), async (req, res, next) => {
+authrouter.post("/login", validate(loginSchema), async (req, res) => {
   console.log("LOGIN ATTEMPT RECEIVED WITH BODY:", req.body);
 
   try {
@@ -64,16 +60,16 @@ authrouter.post("/login", validate(loginSchema), async (req, res, next) => {
     const { Password: _, ...userData } = checkemail.toObject();
     res.status(200).json(userData);
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: "internal server error : ", err });
   }
 });
 //logout route
-authrouter.post("/logout", async (req, res, next) => {
+authrouter.post("/logout", async (req, res) => {
   try {
     clearjwt(res);
     res.status(200).json({ message: "logout succesful" });
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: "internal server error : ", err });
   }
 });
 module.exports = authrouter;
