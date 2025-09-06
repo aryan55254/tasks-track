@@ -191,9 +191,11 @@ function Landing() {
             lists, track your progress, and help you achieve your personal
             goals.
           </p>
-          <button className="text-xl md:text-2xl px-8 py-4 font-semibold mt-12 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-transform duration-200 hover:scale-105 cursor-pointer">
-            <Link to="/login">Get Started</Link>
-          </button>
+          <Link to="/login">
+            <button className="text-xl md:text-2xl px-8 py-4 font-semibold mt-12 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-transform duration-200 hover:scale-105 cursor-pointer">
+              Get Started
+            </button>
+          </Link>
         </div>
       </div>
 
