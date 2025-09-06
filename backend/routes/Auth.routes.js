@@ -14,17 +14,14 @@ authrouter.post(
   async (req, res, next) => {
     try {
       const { Username, Email, Password } = req.body;
-      if (!Username || !Email || !Password) {
-        res.status(400).json({ message: "missing credentials" });
-        return;
-      }
+
       const existingemail = await user.findOne({ Email });
       if (existingemail) {
-        res
+        return res
           .status(409)
-          .json({ message: "account with this email already exists" });
-        return;
+          .json({ message: "Account with this email already exists" });
       }
+
       const hashedpassword = await bcrypt.hash(Password, 10);
 
       const newuser = new user({
@@ -33,8 +30,10 @@ authrouter.post(
         Password: hashedpassword,
       });
       await newuser.save();
-      res.status(201).json({ message: "user succesfuly registered" });
+
+      res.status(201).json({ message: "User successfully registered" });
     } catch (err) {
+      // For any unexpected errors (like DB connection issues)
       next(err);
     }
   }
