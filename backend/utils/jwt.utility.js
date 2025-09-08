@@ -25,13 +25,6 @@ const clearjwt = (res) => {
     expires: new Date(0),
     path: "/",
   });
-  res.cookie("refreshjwt", "", {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "none" : "lax",
-    expires: new Date(0),
-    path: "/",
-  });
 };
 
 module.exports = { generatejwt, clearjwt };
