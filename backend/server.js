@@ -13,7 +13,7 @@ const app = express();
 //middleware
 app.use(
   cors({
-    origin: "https://tasks-track-three.vercel.app",
+    origin: "https://tasktrack.aryanmishra.site",
     credentials: true,
   })
 );
